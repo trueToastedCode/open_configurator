@@ -66,6 +66,14 @@ class _DictDictNoTreeWidgetState extends State<DictDictNoTreeWidget> with Ticker
       arrowAnimationController,
       Tween(begin: 0.0, end: pi).animate(arrowAnimationController),
     ]);
+    globals.undoList.add(() {
+      final index = _controllers.indexOf(list);
+      _dict.remove(key);
+      _controllers.removeAt(index);
+      _textBefore.removeAt(index);
+      _animationList.removeAt(index);
+      _setValue(null);
+    });
     _setValue(null);
   }
 
