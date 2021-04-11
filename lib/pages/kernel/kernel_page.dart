@@ -37,7 +37,7 @@ class _KernelPageState extends State<KernelPage> {
               ),
               tabs: [
                 Tab(text: "Add", icon: Icon(Icons.add, size: 19)),
-                Tab(text: "Add", icon: Icon(Icons.block, size: 19)),
+                Tab(text: "Block", icon: Icon(Icons.block, size: 19)),
                 Tab(text: "Emulate", icon: Icon(Icons.add_to_queue, size: 19)),
                 Tab(text: "Force", icon: Icon(Icons.whatshot, size: 19)),
                 Tab(text: "Patch", icon: Icon(Icons.construction_outlined, size: 19)),

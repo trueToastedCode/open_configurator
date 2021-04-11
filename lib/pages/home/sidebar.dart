@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:open_configurator/pages/acpi/acpi_page.dart';
 import 'package:open_configurator/pages/booter/booter_page.dart';
@@ -106,8 +105,8 @@ class _SideBarState extends State<SideBar> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text("OpenConfigurator 0.0.0", style: TextStyle(fontSize: 10)),
-                  Text("OpenCore 0.6.3", style: TextStyle(fontSize: 10)),
+                  Text("OpenConfigurator 0.0.1", style: TextStyle(fontSize: 10)),
+                  Text("OpenCore 0.6.8", style: TextStyle(fontSize: 10)),
                 ],
               ),
             ],
@@ -134,12 +133,35 @@ class _SideBarState extends State<SideBar> {
                 splashRadius: 12,
               ),
               IconButton(
-                onPressed: widget.onReset,
+                onPressed: resetDialog,
                 icon: Icon(Icons.exit_to_app, size: 13),
                 padding: EdgeInsets.all(0),
                 splashRadius: 12,
               ),
             ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  void resetDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) => CupertinoAlertDialog(
+        title: Text("Leave"),
+        content: Text("Do you really want to leave this configuration?", style: TextStyle(fontSize: 15)),
+        actions: <Widget>[
+          TextButton(
+            child: Text("Yes", style: TextStyle(color: Colors.red)),
+            onPressed: () {
+              Navigator.of(context).pop();
+              widget.onReset();
+            },
+          ),
+          TextButton(
+            child: Text("No", style: TextStyle(color: Colors.blue)),
+            onPressed: () => Navigator.of(context).pop(),
           ),
         ],
       ),

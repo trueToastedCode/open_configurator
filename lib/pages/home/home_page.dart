@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:open_configurator/pages/home/sidebar.dart';
 import 'package:open_configurator/pages/nvram/nvram_page.dart';
-import 'package:open_configurator/globals.dart' as globals;
 
 class HomePage extends StatefulWidget {
   final Function onSave, onReset;
@@ -19,7 +18,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: Row(
         children: [
-          SideBar(setPage: _setPage, onReset: widget.onReset, onSave: widget.onSave),
+          SideBar(setPage: _setPage, onSave: widget.onSave, onReset: widget.onReset),
           Expanded(child: _page),
         ],
       ),

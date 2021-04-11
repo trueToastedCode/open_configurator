@@ -27,6 +27,13 @@ class _NvramDeleteWidgetState extends State<NvramDeleteWidget> {
               getStringArray: () => globals.pConfig.pConfig["content"]["NVRAM"]["content"]["Delete"]["content"]["4D1FDA02-38C7-4A6A-9CC6-4BCCA8B30102"]["content"],
               setStringArray: (value) => globals.pConfig.pConfig["content"]["NVRAM"]["content"]["Delete"]["content"]["4D1FDA02-38C7-4A6A-9CC6-4BCCA8B30102"]["content"] = value,
             ),
+            SizedBox(width: 8),
+            StringArrayWidget(
+              width: 220,
+              height: 200,
+              getStringArray: () => globals.pConfig.getValue(["content", "NVRAM", "content", "Delete", "content", "7C436110-AB2A-4BBB-A880-FE41995C9F82", "content"], null),
+              setStringArray: (value) => globals.pConfig.setValue(["content", "NVRAM", "content", "Delete", "content", "7C436110-AB2A-4BBB-A880-FE41995C9F82", "content"], value, null)
+            ),
           ],
         ),
       ],

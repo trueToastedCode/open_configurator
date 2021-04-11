@@ -15,11 +15,20 @@ class _LoadConfigPageState extends State<LoadConfigPage> {
   String _errorMsg;
 
   void _loadConfig() async {
-    final value = await FlutterClipboard.paste();
+    String value = await FlutterClipboard.paste();
     if (value == null || value.length == 0) {
       // error: clipboard is empty
       _showError("Error (Clipboard is empty)");
       return;
+    }
+    // remove quotation marks
+    if (value[0] == "\"" && value[value.length-1] == "\"") {
+      value = value.substring(1, value.length-1);
+      if (value.length == 0) {
+        // error: clipboard is empty
+        _showError("Error (Clipboard is empty)");
+        return;
+      }
     }
     // read and parse file
     final pConfig = PConfig(path: value);

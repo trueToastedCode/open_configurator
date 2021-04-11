@@ -1,10 +1,16 @@
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:desktop_window/desktop_window.dart';
 import 'package:open_configurator/pages/home/home_page.dart';
 import 'package:open_configurator/globals.dart' as globals;
 import 'package:open_configurator/pages/load_config_page.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
+    await DesktopWindow.setWindowSize(Size(900, 620));
+  }
   runApp(Main());
 }
 
@@ -33,18 +39,23 @@ class _MainState extends State<Main> {
             )
           : HomePage(
               onReset: () {
-                // globals reset not enough... full restart required
+                setState(() {
+                  globals.pConfig = null;
+                  globals.undoList = [];
+                  globals.changeColorMode = null;
+                  globals.changeColorMode2 = null;
+                });
               },
               onSave: () {
                 final path = globals.pConfig.path;
                 String newPath;
                 for (int i=path.length-1; i>-1; i--) {
                   if (path[i] == ".") {
-                    newPath = path.substring(0, i) + "_Test.plist";
+                    newPath = path.substring(0, i) + "_OpenConf.plist";
                     break;
                   }
                 }
-                if (newPath == null) newPath = path + "-Test.plist";
+                if (newPath == null) newPath = path + "_OpenConf.plist";
                 globals.pConfig.write(newPath);
               },
             ),
