@@ -21,7 +21,7 @@ class _KernelAddWidgetState extends State<KernelAddWidget> {
             width: 600,
             keyForHeader: "Comment",
             getDummyEntry: () => {
-              "Address": {"type": "string", "content": "x86_64"},
+              "Arch": {"type": "string", "content": "x86_64"},
               "BundlePath": {"type": "string", "content": "*.kext"},
               "Comment": {"type": "string", "content": ""},
               "Enabled": {"type": "bool", "content": "0"},

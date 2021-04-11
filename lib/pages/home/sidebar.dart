@@ -105,8 +105,8 @@ class _SideBarState extends State<SideBar> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text("OpenConfigurator 0.0.1", style: TextStyle(fontSize: 10)),
-                  Text("OpenCore 0.6.8", style: TextStyle(fontSize: 10)),
+                  Text("OpenConfigurator 0.0.1-2", style: TextStyle(fontSize: 10)),
+                  Text("OpenCore 0.6.7-0.6.8", style: TextStyle(fontSize: 10)),
                 ],
               ),
             ],
