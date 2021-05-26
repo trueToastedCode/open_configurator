@@ -16,11 +16,14 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Row(
-        children: [
-          SideBar(setPage: _setPage, onSave: widget.onSave, onReset: widget.onReset),
-          Expanded(child: _page),
-        ],
+      resizeToAvoidBottomInset: false,
+      body: SafeArea(
+        child: Row(
+          children: [
+            SideBar(setPage: _setPage, onSave: widget.onSave, onReset: widget.onReset),
+            Expanded(child: _page),
+          ],
+        ),
       ),
     );
   }

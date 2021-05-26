@@ -1,8 +1,12 @@
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:open_configurator/services/pconfig.dart';
 import 'package:open_configurator/globals.dart' as globals;
+import 'dart:io' show Platform;
+
+import 'package:permission_handler/permission_handler.dart';
 
 class LoadConfigPage extends StatefulWidget {
   final Function onConfigLoaded;
@@ -14,7 +18,24 @@ class LoadConfigPage extends StatefulWidget {
 class _LoadConfigPageState extends State<LoadConfigPage> {
   String _errorMsg;
 
-  void _loadConfig() async {
+  Future<void> _loadConfig() async {
+    // check permission
+    bool storageError = false;
+
+    if (Platform.isAndroid) {
+      if (! await Permission.storage.request().isGranted) storageError = true;
+      else if (! await Permission.manageExternalStorage.request().isGranted) storageError = true;
+      if (storageError) {
+        Fluttertoast.showToast(
+          msg: "This app needs storage permission to work!",
+          toastLength: Toast.LENGTH_SHORT,
+          timeInSecForIosWeb: 1,
+          fontSize: 16.0
+        );
+        return;
+      }
+    }
+    // load
     String value = await FlutterClipboard.paste();
     if (value == null || value.length == 0) {
       // error: clipboard is empty
@@ -137,6 +158,10 @@ class _LoadConfigPageState extends State<LoadConfigPage> {
                   ),
                   Text(
                     "Linux: Depends on Distro",
+                    style: TextStyle(fontSize: 12),
+                  ),
+                  Text(
+                    "Android: /sdcard/...",
                     style: TextStyle(fontSize: 12),
                   ),
                 ],

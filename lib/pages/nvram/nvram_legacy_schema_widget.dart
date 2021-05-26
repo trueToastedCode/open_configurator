@@ -14,7 +14,7 @@ class _LegacySchemaWidgetState extends State<LegacySchemaWidget> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         StringArrayWidget(
-          width: 300,
+          width: 400,
           height: 200,
           getStringArray: () => globals.pConfig.pConfig["content"]["NVRAM"]["content"]["LegacySchema"]["content"]["7C436110-AB2A-4BBB-A880-FE41995C9F82"]["content"],
           setStringArray: (value) => globals.pConfig.pConfig["content"]["NVRAM"]["content"]["LegacySchema"]["content"]["7C436110-AB2A-4BBB-A880-FE41995C9F82"]["content"] = value,

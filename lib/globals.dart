@@ -12,6 +12,8 @@ bool isDark = true;
 Function changeColorMode;
 Function changeColorMode2;
 
+bool isMobile;
+
 PConfig pConfig;
 List<Function> undoList = [];
 

@@ -11,6 +11,7 @@ void main() async {
   if (/*Platform.isWindows || */Platform.isLinux || Platform.isMacOS) {
     await DesktopWindow.setWindowSize(Size(900, 620));
   }
+  globals.isMobile = !(Platform.isWindows || Platform.isLinux || Platform.isMacOS);
   runApp(Main());
 }
 

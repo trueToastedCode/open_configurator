@@ -42,10 +42,10 @@ class _NVRAMPageState extends State<NVRAMPage> {
         ),
         body: TabBarView(
           children: [
-            NvramAddWidget(),
-            NvramDeleteWidget(),
-            NvramLegacyWidget(),
-            LegacySchemaWidget(),
+            SingleChildScrollView(child: NvramAddWidget()),
+            SingleChildScrollView(child: NvramDeleteWidget()),
+            SingleChildScrollView(child: NvramLegacyWidget()),
+            SingleChildScrollView(child: LegacySchemaWidget()),
           ],
         ),
       ),
