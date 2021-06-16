@@ -25,6 +25,7 @@ class _MiscToolsWidgetState extends State<MiscToolsWidget> {
               "Auxiliary": {"type": "bool", "content": "0"},
               "Comment": {"type": "string", "content": ""},
               "Enabled": {"type": "bool", "content": "0"},
+              "Flavour": {"type": "string", "content": "Auto"},
               "Name": {"type": "string", "content": ""},
               "Path": {"type": "string", "content": ""},
               "RealPath": {"type": "bool", "content": "0"},

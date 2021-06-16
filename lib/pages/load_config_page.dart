@@ -1,4 +1,5 @@
 import 'package:clipboard/clipboard.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -21,8 +22,10 @@ class _LoadConfigPageState extends State<LoadConfigPage> {
   Future<void> _loadConfig() async {
     // check permission
     bool storageError = false;
-
+    // load
+    String value;
     if (Platform.isAndroid) {
+      // load form android
       if (! await Permission.storage.request().isGranted) storageError = true;
       else if (! await Permission.manageExternalStorage.request().isGranted) storageError = true;
       if (storageError) {
@@ -34,21 +37,25 @@ class _LoadConfigPageState extends State<LoadConfigPage> {
         );
         return;
       }
-    }
-    // load
-    String value = await FlutterClipboard.paste();
-    if (value == null || value.length == 0) {
-      // error: clipboard is empty
-      _showError("Error (Clipboard is empty)");
-      return;
-    }
-    // remove quotation marks
-    if (value[0] == "\"" && value[value.length-1] == "\"") {
-      value = value.substring(1, value.length-1);
-      if (value.length == 0) {
+      final result = await FilePicker.platform.pickFiles();
+      if (result == null) return;
+      value = result.files.single.path;
+    }else {
+      // load from desktop os
+      value = await FlutterClipboard.paste();
+      if (value == null || value.length == 0) {
         // error: clipboard is empty
         _showError("Error (Clipboard is empty)");
         return;
+      }
+      // remove quotation marks
+      if (value[0] == "\"" && value[value.length-1] == "\"") {
+        value = value.substring(1, value.length-1);
+        if (value.length == 0) {
+          // error: clipboard is empty
+          _showError("Error (Clipboard is empty)");
+          return;
+        }
       }
     }
     // read and parse file
@@ -122,7 +129,7 @@ class _LoadConfigPageState extends State<LoadConfigPage> {
                     onTap: _loadConfig,
                     child: Center(
                       child: Text(
-                        "Paste path",
+                        Platform.isAndroid ? "Open" : "Paste path",
                         style: TextStyle(
                             color: const Color(0xff000000),
                             fontWeight: FontWeight.bold
@@ -161,7 +168,7 @@ class _LoadConfigPageState extends State<LoadConfigPage> {
                     style: TextStyle(fontSize: 12),
                   ),
                   Text(
-                    "Android: /sdcard/...",
+                    "Android: Press Open",
                     style: TextStyle(fontSize: 12),
                   ),
                 ],

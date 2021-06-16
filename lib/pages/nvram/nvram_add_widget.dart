@@ -70,6 +70,13 @@ class _NvramAddWidgetState extends State<NvramAddWidget> {
           getValue: () => globals.pConfig.pConfig["content"]["NVRAM"]["content"]["Add"]["content"]["7C436110-AB2A-4BBB-A880-FE41995C9F82"]["content"]["run-efi-updater"]["content"],
           setValue: (value) => globals.pConfig.pConfig["content"]["NVRAM"]["content"]["Add"]["content"]["7C436110-AB2A-4BBB-A880-FE41995C9F82"]["content"]["run-efi-updater"]["content"] = value,
         ),
+        SizedBox(height: 4),
+        StringWidget(
+          width: 270,
+          title: "ForceDisplayRotationInEFI",
+          getValue: () => globals.pConfig.pConfig["content"]["NVRAM"]["content"]["Add"]["content"]["7C436110-AB2A-4BBB-A880-FE41995C9F82"]["content"]["ForceDisplayRotationInEFI"]["content"],
+          setValue: (value) => globals.pConfig.pConfig["content"]["NVRAM"]["content"]["Add"]["content"]["7C436110-AB2A-4BBB-A880-FE41995C9F82"]["content"]["ForceDisplayRotationInEFI"]["content"] = value,
+        ),
       ],
     );
   }
