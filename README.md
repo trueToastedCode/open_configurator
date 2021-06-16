@@ -1,6 +1,6 @@
 # open_configurator
 
-A new Flutter project.
+A configuration tool for OpenCore
 
 ## Getting Started
 
