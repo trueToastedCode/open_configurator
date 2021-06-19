@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:open_configurator/globals.dart' as globals;
 import 'package:open_configurator/pages/uefi/uefi_apfs_widget.dart';
+import 'package:open_configurator/pages/uefi/uefi_appleinput_widget.dart';
 import 'package:open_configurator/pages/uefi/uefi_audio_widget.dart';
 import 'package:open_configurator/pages/uefi/uefi_drivers_widget.dart';
 import 'package:open_configurator/pages/uefi/uefi_input_widget.dart';
@@ -26,7 +27,7 @@ class _UEFIPageState extends State<UEFIPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: DefaultTabController(
-        length: 8,
+        length: 9,
         child: Scaffold(
           appBar: AppBar(
             flexibleSpace: Padding(
@@ -38,6 +39,7 @@ class _UEFIPageState extends State<UEFIPage> {
                 ),
                 tabs: [
                   Tab(text: "APFS", icon: Icon(Icons.assistant_photo, size: 19)),
+                  Tab(text: "AppleInput", icon: Icon(Icons.album, size: 19)),
                   Tab(text: "Audio", icon: Icon(Icons.speaker, size: 19)),
                   Tab(text: "Drivers", icon: Icon(Icons.drive_eta, size: 19)),
                   Tab(text: "Input", icon: Icon(Icons.keyboard, size: 19)),
@@ -52,6 +54,7 @@ class _UEFIPageState extends State<UEFIPage> {
           body: TabBarView(
             children: [
               UefiAPFSWidget(),
+              UefiAppleInputWidget(),
               UefiAudioWidget(),
               UefiDriversWidget(),
               UefiInputWidgets(),
