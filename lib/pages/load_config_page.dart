@@ -107,11 +107,21 @@ class _LoadConfigPageState extends State<LoadConfigPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            SizedBox(height: 6),
             Text(
               "OpenConfigurator",
               style: TextStyle(
                   fontSize: 21,
                   letterSpacing: -0.5
+              ),
+            ),
+            SizedBox(height: 3),
+            Text(
+              "Only for OC ${globals.OC_VERSION}",
+              style: TextStyle(
+                fontSize: 15.0,
+                letterSpacing: -0.5,
+                color: Colors.red,
               ),
             ),
             SizedBox(height: 20),
@@ -146,39 +156,39 @@ class _LoadConfigPageState extends State<LoadConfigPage> {
                 ),
               ),
             ),
-            SizedBox(height: 60),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.black.withOpacity(0.4),
-              ),
-              child: Column(
-                children: [
-                  Text(
-                    "How to get the path",
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    "MacOS: Mark file in finder, press Cmd-Opt-C",
-                    style: TextStyle(fontSize: 12),
-                  ),
-                  Text(
-                    "Windows: Mark file in explorer, click home and copy path",
-                    style: TextStyle(fontSize: 12),
-                  ),
-                  Text(
-                    "Linux: Depends on Distro",
-                    style: TextStyle(fontSize: 12),
-                  ),
-                  Text(
-                    "Android/iOS/iPadOS: Press Open",
-                    style: TextStyle(fontSize: 12),
-                  ),
-                ],
-              ),
-            ),
+          ...(globals.isMobile
+                ? []
+                : [
+                    SizedBox(height: 60),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.black.withOpacity(0.4),
+                      ),
+                      child: Column(
+                        children: [
+                          Text(
+                            "How to get the path",
+                            style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(height: 8),
+                          Text(
+                            "MacOS: Mark file in finder, press Cmd-Opt-C",
+                            style: TextStyle(fontSize: 12),
+                          ),
+                          Text(
+                            "Windows: Mark file in explorer, click home and copy path",
+                            style: TextStyle(fontSize: 12),
+                          ),
+                          Text(
+                            "Linux: Depends on Distro",
+                            style: TextStyle(fontSize: 12),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ]),
             SizedBox(height: 10),
             _getErrorWidget(),
           ],

@@ -155,7 +155,7 @@ class _SideBarState extends State<SideBar> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text("OpenConfigurator 0.0.1-7",
+                  Text("OpenConfigurator 0.0.1-8",
                       style: TextStyle(fontSize: 10)),
                   Text("OpenCore ${globals.OC_VERSION}", style: TextStyle(fontSize: 10)),
                 ],
@@ -250,7 +250,7 @@ class _SideBarState extends State<SideBar> {
             folderIconColor: Colors.teal,
           );
           if (path == null) return;
-          newPath = path + "_OpenConf.plist";
+          newPath = path + "/config.plist";
         }else {
           final path = globals.pConfig.path;
           for (int i=path.length-1; i>-1; i--) {
@@ -259,7 +259,9 @@ class _SideBarState extends State<SideBar> {
               break;
             }
           }
-          if (newPath == null) newPath = path + "_OpenConf.plist";
+          if (newPath == null) {
+            newPath = path + "_OpenConf.plist";
+          }
         }
         globals.pConfig.write(newPath);
         showDialog(context: context, builder: (BuildContext context) => CupertinoAlertDialog(
