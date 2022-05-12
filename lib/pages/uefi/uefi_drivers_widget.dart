@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:open_configurator/globals.dart' as globals;
+import 'package:open_configurator/templates/dict_array_widget.dart';
 import '../../templates/checkbox_widget.dart';
 import '../../templates/string_array_widget.dart';
 
@@ -22,10 +23,17 @@ class _UefiDriversWidgetState extends State<UefiDriversWidget> {
         ),
         SizedBox(height: 5),
         Expanded(
-          child: StringArrayWidget(
-            width: 300,
-            getStringArray: () => globals.pConfig.getValue(["content", "UEFI", "content", "Drivers", "content"], null),
-            setStringArray: (value) => globals.pConfig.setValue(["content", "UEFI", "content", "Drivers", "content"], value, null),
+          child: DictArrayWidget(
+            getArray: () => globals.pConfig.getValue(["content", "UEFI", "content", "Drivers", "content"], null),
+            setArray: (value) => globals.pConfig.setValue(["content", "UEFI", "content", "Drivers", "content"], value, null),
+            width: 600,
+            keyForHeader: "Comment",
+            getDummyEntry: () => {
+              "Arguments": {"type": "string", "content": ""},
+              "Comment": {"type": "string", "content": ""},
+              "Enabled": {"type": "bool", "content": "0"},
+              "Path": {"type": "string", "content": ""},
+            },
           ),
         ),
       ],

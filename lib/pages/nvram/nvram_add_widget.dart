@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:open_configurator/templates/data_widget.dart';
 import 'package:open_configurator/globals.dart' as globals;
+import 'package:open_configurator/templates/number_widget.dart';
 import 'package:open_configurator/templates/string_widget.dart';
 
 class NvramAddWidget extends StatefulWidget {
@@ -24,16 +25,23 @@ class _NvramAddWidgetState extends State<NvramAddWidget> {
         SizedBox(height: 4),
         DataWidget(
           width: 270,
-          title: "UIScale",
-          getValue: () => globals.pConfig.pConfig["content"]["NVRAM"]["content"]["Add"]["content"]["4D1EDE05-38C7-4A6A-9CC6-4BCCA8B38C14"]["content"]["UIScale"]["content"],
-          setValue: (value) => globals.pConfig.pConfig["content"]["NVRAM"]["content"]["Add"]["content"]["4D1EDE05-38C7-4A6A-9CC6-4BCCA8B38C14"]["content"]["UIScale"]["content"] = value,
-        ),
-        SizedBox(height: 4),
-        DataWidget(
-          width: 270,
           title: "rtc-blacklist",
           getValue: () => globals.pConfig.pConfig["content"]["NVRAM"]["content"]["Add"]["content"]["4D1FDA02-38C7-4A6A-9CC6-4BCCA8B30102"]["content"]["rtc-blacklist"]["content"],
           setValue: (value) => globals.pConfig.pConfig["content"]["NVRAM"]["content"]["Add"]["content"]["4D1FDA02-38C7-4A6A-9CC6-4BCCA8B30102"]["content"]["rtc-blacklist"]["content"] = value,
+        ),
+        SizedBox(height: 4),
+        StringWidget(
+          width: 270,
+          title: "#INFO (prev-lang:kbd)",
+          getValue: () => globals.pConfig.pConfig["content"]["NVRAM"]["content"]["Add"]["content"]["7C436110-AB2A-4BBB-A880-FE41995C9F82"]["content"]["#INFO (prev-lang:kbd)"]["content"],
+          setValue: (value) => globals.pConfig.pConfig["content"]["NVRAM"]["content"]["Add"]["content"]["7C436110-AB2A-4BBB-A880-FE41995C9F82"]["content"]["#INFO (prev-lang:kbd)"]["content"] = value,
+        ),
+        SizedBox(height: 4),
+        NumberWidget(
+          width: 270,
+          title: "ForceDisplayRotationInEFI",
+          getValue: () => globals.pConfig.pConfig["content"]["NVRAM"]["content"]["Add"]["content"]["7C436110-AB2A-4BBB-A880-FE41995C9F82"]["content"]["ForceDisplayRotationInEFI"]["content"],
+          setValue: (value) => globals.pConfig.pConfig["content"]["NVRAM"]["content"]["Add"]["content"]["7C436110-AB2A-4BBB-A880-FE41995C9F82"]["content"]["ForceDisplayRotationInEFI"]["content"] = value,
         ),
         SizedBox(height: 4),
         DataWidget(
@@ -69,13 +77,6 @@ class _NvramAddWidgetState extends State<NvramAddWidget> {
           title: "run-efi-updater",
           getValue: () => globals.pConfig.pConfig["content"]["NVRAM"]["content"]["Add"]["content"]["7C436110-AB2A-4BBB-A880-FE41995C9F82"]["content"]["run-efi-updater"]["content"],
           setValue: (value) => globals.pConfig.pConfig["content"]["NVRAM"]["content"]["Add"]["content"]["7C436110-AB2A-4BBB-A880-FE41995C9F82"]["content"]["run-efi-updater"]["content"] = value,
-        ),
-        SizedBox(height: 4),
-        StringWidget(
-          width: 270,
-          title: "ForceDisplayRotationInEFI",
-          getValue: () => globals.pConfig.pConfig["content"]["NVRAM"]["content"]["Add"]["content"]["7C436110-AB2A-4BBB-A880-FE41995C9F82"]["content"]["ForceDisplayRotationInEFI"]["content"],
-          setValue: (value) => globals.pConfig.pConfig["content"]["NVRAM"]["content"]["Add"]["content"]["7C436110-AB2A-4BBB-A880-FE41995C9F82"]["content"]["ForceDisplayRotationInEFI"]["content"] = value,
         ),
       ],
     );

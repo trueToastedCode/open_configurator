@@ -27,10 +27,10 @@ class _LoadConfigPageState extends State<LoadConfigPage> {
     if (Platform.isAndroid) {
       // load form android
       if (! await Permission.storage.request().isGranted) storageError = true;
-      else if (! await Permission.manageExternalStorage.request().isGranted) storageError = true;
+      // else if (! await Permission.manageExternalStorage.request().isGranted) storageError = true;
       if (storageError) {
         Fluttertoast.showToast(
-          msg: "This app needs storage permission to work!",
+          msg: "Please set ManageExternalStorage manually in Settings!",
           toastLength: Toast.LENGTH_SHORT,
           timeInSecForIosWeb: 1,
           fontSize: 16.0
@@ -40,7 +40,12 @@ class _LoadConfigPageState extends State<LoadConfigPage> {
       final result = await FilePicker.platform.pickFiles();
       if (result == null) return;
       value = result.files.single.path;
-    }else {
+    } else if (Platform.isIOS) {
+      // load from iOS / iPadOS
+      final result = await FilePicker.platform.pickFiles();
+      if (result == null) return;
+      value = result.files.single.path;
+    } else {
       // load from desktop os
       value = await FlutterClipboard.paste();
       if (value == null || value.length == 0) {
@@ -129,7 +134,7 @@ class _LoadConfigPageState extends State<LoadConfigPage> {
                     onTap: _loadConfig,
                     child: Center(
                       child: Text(
-                        Platform.isAndroid ? "Open" : "Paste path",
+                        Platform.isAndroid || Platform.isIOS ? "Open" : "Paste path",
                         style: TextStyle(
                             color: const Color(0xff000000),
                             fontWeight: FontWeight.bold
@@ -168,7 +173,7 @@ class _LoadConfigPageState extends State<LoadConfigPage> {
                     style: TextStyle(fontSize: 12),
                   ),
                   Text(
-                    "Android: Press Open",
+                    "Android/iOS/iPadOS: Press Open",
                     style: TextStyle(fontSize: 12),
                   ),
                 ],

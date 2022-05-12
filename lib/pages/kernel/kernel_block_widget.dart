@@ -27,6 +27,7 @@ class _KernelBlockWidgetState extends State<KernelBlockWidget> {
               "Identifier": {"type": "string", "content": ""},
               "MaxKernel": {"type": "string", "content": ""},
               "MinKernel": {"type": "string", "content": ""},
+              "Strategy": {"type": "string", "content": "Disable"},
             },
           ),
         ),

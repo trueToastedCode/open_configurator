@@ -8,6 +8,8 @@ import 'templates/checkbox_widget.dart';
 import 'templates/data_widget.dart';
 import 'templates/string_widget.dart';
 
+const OC_VERSION = '0.8.0';
+
 bool isDark = true;
 Function changeColorMode;
 Function changeColorMode2;

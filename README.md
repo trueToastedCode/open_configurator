@@ -1,6 +1,6 @@
 # open_configurator
 
-A configuration tool for OpenCore
+A configuration tool for OpenCore.
 
 ## Getting Started
 

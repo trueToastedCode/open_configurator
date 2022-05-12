@@ -29,13 +29,19 @@ class PConfig {
     }
   }
 
-  // writes pconfig map back to xml
-  Future<void> write(String path) async {
+  Future<String> compile() async {
     final pConfig = await this.pConfig;
-    if (pConfig == null) return false;
+    if (pConfig == null) return null;
     final str = "\<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
         "\<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n"
         "\<plist version=\"$version\">\n" + _compose(pConfig, 0) + "\</plist>";
+    return str;
+  }
+
+  // writes pconfig map back to xml
+  Future<void> write(String path) async {
+    String str = await compile();
+    if (str == null) return;
     File(path == null ? this.path : path).writeAsStringSync(str);
   }
 

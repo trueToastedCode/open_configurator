@@ -1,4 +1,4 @@
-package com.example.open_configurator
+package com.truetoastedcode.open_configurator.open_configurator
 
 import io.flutter.embedding.android.FlutterActivity
 

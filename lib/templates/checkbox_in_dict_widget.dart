@@ -109,7 +109,7 @@ class _CheckboxInDictWidgetState extends State<CheckboxInDictWidget> {
                   activeColor: Colors.blue,
                   value: widget.getValue() == "1" ? true : false,
                   onChanged: (value) => value == true ? _onCheck(true) : _onUncheck(true),
-                  splashRadius: 15.0,
+                  // splashRadius: 15.0,
                 ),
               ),
             ),
