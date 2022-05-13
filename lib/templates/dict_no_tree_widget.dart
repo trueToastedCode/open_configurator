@@ -12,9 +12,9 @@ import 'data_in_dict_widget.dart';
 import 'number_in_dict_widget.dart';
 
 class DictDictNoTreeWidget extends StatefulWidget {
-  final double width, height;
+  final double width, height, itemWidth, itemHeight;
   final Function getDict, setDict;
-  const DictDictNoTreeWidget({this.width, this.height, this.getDict, this.setDict});
+  const DictDictNoTreeWidget({this.width, this.height, this.getDict, this.setDict, this.itemWidth, this.itemHeight});
   @override
   _DictDictNoTreeWidgetState createState() => _DictDictNoTreeWidgetState();
 }
@@ -157,6 +157,8 @@ class _DictDictNoTreeWidgetState extends State<DictDictNoTreeWidget> with Ticker
           widgets.addAll([
             DataInDictWidget(
               title: key2,
+              width: widget.itemWidth,
+              height: widget.itemHeight,
               getValue: () => _dict[key]["content"][key2]["content"],
               setValue: (value) => _setValue(() => _dict[key]["content"][key2]["content"] = value),
               setTitle: (value) => _onKeyInChildChange(key, key2, value),
@@ -171,6 +173,8 @@ class _DictDictNoTreeWidgetState extends State<DictDictNoTreeWidget> with Ticker
           widgets.addAll([
             StringInDictWidget(
               title: key2,
+              width: widget.itemWidth,
+              height: widget.itemHeight,
               getValue: () => _dict[key]["content"][key2]["content"],
               setValue: (value) => _setValue(() => _dict[key]["content"][key2]["content"] = value),
               setTitle: (value) => _onKeyInChildChange(key, key2, value),
@@ -185,6 +189,8 @@ class _DictDictNoTreeWidgetState extends State<DictDictNoTreeWidget> with Ticker
           widgets.addAll([
             NumberInDictWidget(
               title: key2,
+              width: widget.itemWidth,
+              height: widget.itemHeight,
               getValue: () => _dict[key]["content"][key2]["content"],
               setValue: (value) => _setValue(() => _dict[key]["content"][key2]["content"] = value),
               setTitle: (value) => _onKeyInChildChange(key, key2, value),
@@ -199,6 +205,8 @@ class _DictDictNoTreeWidgetState extends State<DictDictNoTreeWidget> with Ticker
           widgets.addAll([
             CheckboxInDictWidget(
               title: key2,
+              width: widget.itemWidth,
+              height: widget.itemHeight,
               getValue: () => _dict[key]["content"][key2]["content"],
               setValue: (value) => _setValue(() => _dict[key]["content"][key2]["content"] = value),
               setTitle: (value) => _onKeyInChildChange(key, key2, value),
@@ -348,117 +356,224 @@ class _DictDictNoTreeWidgetState extends State<DictDictNoTreeWidget> with Ticker
       height: (widget.height == null || widget.height == -1) ? null : widget.height,
       child: Column(
         children: [
-          Expanded(
-            child: ListView(
-              children: _dict.keys.map((String key) => Padding(
-                padding: EdgeInsets.only(bottom: 5),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(15),
-                  child: Material(
-                    color: globals.isDark ? Color(0xff434547) : Color(0xffededed),
-                    child: ExpansionTile(
-                      onExpansionChanged: (value) {
-                        final controller = _animationList[_dict.keys.toList().indexOf(key)][0];
-                        controller.isCompleted
-                            ? controller.reverse()
-                            : controller.forward();
-                      },
-                      title: TextFormField(
-                        focusNode: _controllers[_dict.keys.toList().indexOf(key)][1],
-                        maxLines: 1,
-                        decoration: InputDecoration(
-                          isDense: true,
-                          border: InputBorder.none,
-                          focusedBorder: InputBorder.none,
-                          enabledBorder: InputBorder.none,
-                          errorBorder: InputBorder.none,
-                          disabledBorder: InputBorder.none,
-                          hintText: "key",
-                          contentPadding: EdgeInsets.only(top: 17),
-                        ),
-                        style: TextStyle(fontSize: 12),
-                        textAlignVertical: TextAlignVertical.bottom,
-                        controller: _controllers[_dict.keys.toList().indexOf(key)][0],
-                        textAlign: TextAlign.left,
-                      ),
-                      trailing: Container(
-                        // color: Colors.blue.withOpacity(0.1),
-                        width: 75,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            SizedBox(
-                              width: 25,
-                              child: _controllers[_dict.keys.toList().indexOf(key)][1].hasFocus
-                                  ? IconButton(
-                                      icon: Icon(Icons.check, size: 17, color: Colors.green),
-                                      onPressed: () => setState(() => _controllers[_dict.keys.toList().indexOf(key)][1].unfocus()),
-                                      padding: EdgeInsets.all(0),
-                                      splashRadius: 12,
-                                    )
-                                  : IconButton(
-                                      icon: Icon(Icons.edit, size: 15, color: Colors.blue,),
-                                      onPressed: () => setState(() => _controllers[_dict.keys.toList().indexOf(key)][1].requestFocus()),
-                                      padding: EdgeInsets.all(0),
-                                      splashRadius: 12,
-                                    ),
-                            ),
-                            SizedBox(
-                              width: 25,
-                              child: IconButton(
-                                onPressed: () => _onKeyRm(key),
-                                icon: Icon(Icons.delete, size: 15, color: Colors.red),
-                                padding: EdgeInsets.all(0),
-                                splashRadius: 12,
-                              ),
-                            ),
-                            AnimatedBuilder(
-                              animation: _animationList[_dict.keys.toList().indexOf(key)][0],
-                              builder: (context, child) => Transform.rotate(
-                                angle: _animationList[_dict.keys.toList().indexOf(key)][1].value,
-                                child: Icon(
-                                  Icons.expand_more,
-                                  size: 22.0,
-                                  color: Colors.blue,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+          // Expanded(
+          //   child: ListView(
+          //     children: _dict.keys.map((String key) => Padding(
+          //       padding: EdgeInsets.only(bottom: 5),
+          //       child: ClipRRect(
+          //         borderRadius: BorderRadius.circular(15),
+          //         child: Material(
+          //           color: globals.isDark ? Color(0xff434547) : Color(0xffededed),
+          //           child: ExpansionTile(
+          //             onExpansionChanged: (value) {
+          //               final controller = _animationList[_dict.keys.toList().indexOf(key)][0];
+          //               controller.isCompleted
+          //                   ? controller.reverse()
+          //                   : controller.forward();
+          //             },
+          //             title: TextFormField(
+          //               focusNode: _controllers[_dict.keys.toList().indexOf(key)][1],
+          //               maxLines: 1,
+          //               decoration: InputDecoration(
+          //                 isDense: true,
+          //                 border: InputBorder.none,
+          //                 focusedBorder: InputBorder.none,
+          //                 enabledBorder: InputBorder.none,
+          //                 errorBorder: InputBorder.none,
+          //                 disabledBorder: InputBorder.none,
+          //                 hintText: "key",
+          //                 contentPadding: EdgeInsets.only(top: 17),
+          //               ),
+          //               style: TextStyle(fontSize: 12),
+          //               textAlignVertical: TextAlignVertical.bottom,
+          //               controller: _controllers[_dict.keys.toList().indexOf(key)][0],
+          //               textAlign: TextAlign.left,
+          //             ),
+          //             trailing: Container(
+          //               // color: Colors.blue.withOpacity(0.1),
+          //               width: 75,
+          //               child: Row(
+          //                 mainAxisAlignment: MainAxisAlignment.end,
+          //                 children: [
+          //                   SizedBox(
+          //                     width: 25,
+          //                     child: _controllers[_dict.keys.toList().indexOf(key)][1].hasFocus
+          //                         ? IconButton(
+          //                             icon: Icon(Icons.check, size: 17, color: Colors.green),
+          //                             onPressed: () => setState(() => _controllers[_dict.keys.toList().indexOf(key)][1].unfocus()),
+          //                             padding: EdgeInsets.all(0),
+          //                             splashRadius: 12,
+          //                           )
+          //                         : IconButton(
+          //                             icon: Icon(Icons.edit, size: 15, color: Colors.blue,),
+          //                             onPressed: () => setState(() => _controllers[_dict.keys.toList().indexOf(key)][1].requestFocus()),
+          //                             padding: EdgeInsets.all(0),
+          //                             splashRadius: 12,
+          //                           ),
+          //                   ),
+          //                   SizedBox(
+          //                     width: 25,
+          //                     child: IconButton(
+          //                       onPressed: () => _onKeyRm(key),
+          //                       icon: Icon(Icons.delete, size: 15, color: Colors.red),
+          //                       padding: EdgeInsets.all(0),
+          //                       splashRadius: 12,
+          //                     ),
+          //                   ),
+          //                   AnimatedBuilder(
+          //                     animation: _animationList[_dict.keys.toList().indexOf(key)][0],
+          //                     builder: (context, child) => Transform.rotate(
+          //                       angle: _animationList[_dict.keys.toList().indexOf(key)][1].value,
+          //                       child: Icon(
+          //                         Icons.expand_more,
+          //                         size: 22.0,
+          //                         color: Colors.blue,
+          //                       ),
+          //                     ),
+          //                   ),
+          //                 ],
+          //               ),
+          //             ),
+          //             children: [
+          //               ..._buildWidgetsNoTree(key),
+          //               SizedBox(height: 5),
+          //               ClipRRect(
+          //                 borderRadius: BorderRadius.circular(15),
+          //                 child: Container(
+          //                   // color: globals.isDark ? Color(0xff383b3d) : Color(0xffd4d4d4),
+          //                   color: Colors.black.withOpacity(0.2),
+          //                   height: 20,
+          //                   child: Row(
+          //                     mainAxisAlignment: MainAxisAlignment.end,
+          //                     children: [
+          //                       SizedBox(
+          //                         width: 25,
+          //                         child: IconButton(
+          //                           onPressed: () => _onAddInChild(key),
+          //                           icon: Icon(Icons.add, size: 20),
+          //                           padding: EdgeInsets.all(0),
+          //                           splashRadius: 12,
+          //                         ),
+          //                       ),
+          //                       SizedBox(width: 20),
+          //                     ],
+          //                   ),
+          //                 ),
+          //               ),
+          //             ],
+          //           ),
+          //         ),
+          //       ),
+          //     )).toList(),
+          //   ),
+          // ),
+          ..._dict.keys.map((String key) => Padding(
+            padding: EdgeInsets.only(bottom: 5),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(15),
+              child: Material(
+                color: globals.isDark ? Color(0xff434547) : Color(0xffededed),
+                child: ExpansionTile(
+                  onExpansionChanged: (value) {
+                    final controller = _animationList[_dict.keys.toList().indexOf(key)][0];
+                    controller.isCompleted
+                        ? controller.reverse()
+                        : controller.forward();
+                  },
+                  title: TextFormField(
+                    focusNode: _controllers[_dict.keys.toList().indexOf(key)][1],
+                    maxLines: 1,
+                    decoration: InputDecoration(
+                      isDense: true,
+                      border: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      enabledBorder: InputBorder.none,
+                      errorBorder: InputBorder.none,
+                      disabledBorder: InputBorder.none,
+                      hintText: "key",
+                      contentPadding: EdgeInsets.only(top: 0),
+                    ),
+                    style: TextStyle(fontSize: 12),
+                    textAlignVertical: TextAlignVertical.bottom,
+                    controller: _controllers[_dict.keys.toList().indexOf(key)][0],
+                    textAlign: TextAlign.left,
+                  ),
+                  trailing: Container(
+                    // color: Colors.blue.withOpacity(0.1),
+                    width: 75,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        ..._buildWidgetsNoTree(key),
-                        SizedBox(height: 5),
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(15),
-                          child: Container(
-                            // color: globals.isDark ? Color(0xff383b3d) : Color(0xffd4d4d4),
-                            color: Colors.black.withOpacity(0.2),
-                            height: 20,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                SizedBox(
-                                  width: 25,
-                                  child: IconButton(
-                                    onPressed: () => _onAddInChild(key),
-                                    icon: Icon(Icons.add, size: 20),
-                                    padding: EdgeInsets.all(0),
-                                    splashRadius: 12,
-                                  ),
-                                ),
-                                SizedBox(width: 20),
-                              ],
+                        SizedBox(
+                          width: 25,
+                          child: _controllers[_dict.keys.toList().indexOf(key)][1].hasFocus
+                              ? IconButton(
+                            icon: Icon(Icons.check, size: 17, color: Colors.green),
+                            onPressed: () => setState(() => _controllers[_dict.keys.toList().indexOf(key)][1].unfocus()),
+                            padding: EdgeInsets.all(0),
+                            splashRadius: 12,
+                          )
+                              : IconButton(
+                            icon: Icon(Icons.edit, size: 15, color: Colors.blue,),
+                            onPressed: () => setState(() => _controllers[_dict.keys.toList().indexOf(key)][1].requestFocus()),
+                            padding: EdgeInsets.all(0),
+                            splashRadius: 12,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 25,
+                          child: IconButton(
+                            onPressed: () => _onKeyRm(key),
+                            icon: Icon(Icons.delete, size: 15, color: Colors.red),
+                            padding: EdgeInsets.all(0),
+                            splashRadius: 12,
+                          ),
+                        ),
+                        AnimatedBuilder(
+                          animation: _animationList[_dict.keys.toList().indexOf(key)][0],
+                          builder: (context, child) => Transform.rotate(
+                            angle: _animationList[_dict.keys.toList().indexOf(key)][1].value,
+                            child: Icon(
+                              Icons.expand_more,
+                              size: 22.0,
+                              color: Colors.blue,
                             ),
                           ),
                         ),
                       ],
                     ),
                   ),
+                  children: [
+                    ..._buildWidgetsNoTree(key),
+                    SizedBox(height: 5),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(15),
+                      child: Container(
+                        // color: globals.isDark ? Color(0xff383b3d) : Color(0xffd4d4d4),
+                        color: Colors.black.withOpacity(0.2),
+                        height: 20,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            SizedBox(
+                              width: 25,
+                              child: IconButton(
+                                onPressed: () => _onAddInChild(key),
+                                icon: Icon(Icons.add, size: 20),
+                                padding: EdgeInsets.all(0),
+                                splashRadius: 12,
+                              ),
+                            ),
+                            SizedBox(width: 20),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              )).toList(),
+              ),
             ),
-          ),
+          )).toList(),
           ClipRRect(
             borderRadius: BorderRadius.circular(15),
             child: Container(

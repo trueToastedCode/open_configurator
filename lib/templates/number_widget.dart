@@ -72,7 +72,7 @@ class _NumberWidgetState extends State<NumberWidget> {
                 errorBorder: InputBorder.none,
                 disabledBorder: InputBorder.none,
                 hintText: "number",
-                contentPadding: EdgeInsets.only(top: 17),
+                contentPadding: EdgeInsets.only(top: 17, right: 18),
               ),
               style: TextStyle(fontSize: 12),
               textAlignVertical: TextAlignVertical.bottom,

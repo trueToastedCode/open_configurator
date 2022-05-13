@@ -17,7 +17,8 @@ class LoadConfigPage extends StatefulWidget {
 }
 
 class _LoadConfigPageState extends State<LoadConfigPage> {
-  String _errorMsg;
+  String _errorMsg, _dropdownValue = '0.8.0';
+  static const _dropdownOptions = ['0.8.0'];
 
   Future<void> _loadConfig() async {
     // check permission
@@ -74,7 +75,7 @@ class _LoadConfigPageState extends State<LoadConfigPage> {
     }
     // update globals and ui
     globals.pConfig = pConfig;
-    widget.onConfigLoaded();
+    widget.onConfigLoaded('0.8.0');
   }
 
   void _showError(String msg) async {
@@ -111,17 +112,46 @@ class _LoadConfigPageState extends State<LoadConfigPage> {
             Text(
               "OpenConfigurator",
               style: TextStyle(
-                  fontSize: 21,
-                  letterSpacing: -0.5
+                fontSize: 21,
+                letterSpacing: -0.5,
               ),
             ),
-            SizedBox(height: 3),
-            Text(
-              "Only for OC ${globals.OC_VERSION}",
-              style: TextStyle(
-                fontSize: 15.0,
-                letterSpacing: -0.5,
-                color: Colors.red,
+            SizedBox(height: 0),
+            SizedBox(
+              height: 30,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "OC ",
+                    style: TextStyle(
+                      fontSize: 15.0,
+                      letterSpacing: -0.5,
+                      color: Colors.red,
+                    ),
+                  ),
+                  DropdownButtonHideUnderline(
+                    child: DropdownButton(
+                      value: _dropdownValue,
+                      style: TextStyle(
+                        fontSize: 15.0,
+                        letterSpacing: -0.5,
+                        color: Colors.red,
+                      ),
+                      onChanged: (String newValue) {
+                        setState(() {
+                          _dropdownValue = newValue;
+                        });
+                      },
+                      items: _dropdownOptions.map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                ],
               ),
             ),
             SizedBox(height: 20),
@@ -146,8 +176,8 @@ class _LoadConfigPageState extends State<LoadConfigPage> {
                       child: Text(
                         Platform.isAndroid || Platform.isIOS ? "Open" : "Paste path",
                         style: TextStyle(
-                            color: const Color(0xff000000),
-                            fontWeight: FontWeight.bold
+                          color: const Color(0xff000000),
+                          fontWeight: FontWeight.bold
                         ),
                       ),
                     ),

@@ -70,7 +70,7 @@ class _StringWidgetState extends State<StringWidget> {
                 errorBorder: InputBorder.none,
                 disabledBorder: InputBorder.none,
                 hintText: "string",
-                contentPadding: EdgeInsets.only(top: 17),
+                contentPadding: EdgeInsets.only(top: 17, right: 18),
               ),
               style: TextStyle(fontSize: 12),
               textAlignVertical: TextAlignVertical.bottom,

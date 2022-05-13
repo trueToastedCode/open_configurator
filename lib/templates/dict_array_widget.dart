@@ -10,10 +10,10 @@ import 'number_widget.dart';
 import 'string_widget.dart';
 
 class DictArrayWidget extends StatefulWidget {
-  final double width, height;
+  final double width, height, itemWidth, itemHeight;
   final Function getArray, setArray, getDummyEntry;
   final String keyForHeader;
-  const DictArrayWidget({this.width, this.height, this.getArray, this.setArray, this.keyForHeader, this.getDummyEntry});
+  const DictArrayWidget({this.width, this.height, this.getArray, this.setArray, this.keyForHeader, this.getDummyEntry, this.itemHeight, this.itemWidth});
   @override
   _DictArrayWidgetState createState() => _DictArrayWidgetState();
 }
@@ -43,6 +43,8 @@ class _DictArrayWidgetState extends State<DictArrayWidget> with TickerProviderSt
           widgets.addAll([
             CheckboxWidget(
               title: key,
+              width: widget.itemWidth,
+              height: widget.itemHeight,
               getValue: () => _list[_list.indexOf(map)]["content"][key]["content"],
               setValue: (value) => _setValue(() => _list[_list.indexOf(map)]["content"][key]["content"] = value),
             ),
@@ -53,6 +55,8 @@ class _DictArrayWidgetState extends State<DictArrayWidget> with TickerProviderSt
           widgets.addAll([
             NumberWidget(
               title: key,
+              width: widget.itemWidth,
+              height: widget.itemHeight,
               getValue: () => _list[_list.indexOf(map)]["content"][key]["content"],
               setValue: (value) => _setValue(() => _list[_list.indexOf(map)]["content"][key]["content"] = value),
             ),
@@ -63,6 +67,8 @@ class _DictArrayWidgetState extends State<DictArrayWidget> with TickerProviderSt
           widgets.addAll([
             DataWidget(
               title: key,
+              width: widget.itemWidth,
+              height: widget.itemHeight,
               getValue: () => _list[_list.indexOf(map)]["content"][key]["content"],
               setValue: (value) => _setValue(() => _list[_list.indexOf(map)]["content"][key]["content"] = value),
             ),
@@ -73,6 +79,8 @@ class _DictArrayWidgetState extends State<DictArrayWidget> with TickerProviderSt
           widgets.addAll([
             StringWidget(
               title: key,
+              width: widget.itemWidth,
+              height: widget.itemHeight,
               getValue: () => _list[_list.indexOf(map)]["content"][key]["content"],
               setValue: (value) => _setValue(() => _list[_list.indexOf(map)]["content"][key]["content"] = value),
             ),
@@ -172,85 +180,160 @@ class _DictArrayWidgetState extends State<DictArrayWidget> with TickerProviderSt
       height: (widget.height == null || widget.height == -1) ? null : widget.height,
       child: Column(
         children: [
-          Expanded(
-            child: ListView(
-              children: _list.map((Map<String, dynamic> map) => Padding(
-                padding: EdgeInsets.only(bottom: 5),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(15),
-                  child: Material(
-                    color: globals.isDark ? Color(0xff434547) : Color(0xffededed),
-                    child: ExpansionTile(
-                      title: Text(_getEntrieHeader(map), style: TextStyle(color: _getColorBasedOnEnabled(map), fontSize: 12)),
-                      children: _buildWidgetsNoTree(map),
-                      onExpansionChanged: (value) {
-                        final controller = _animationList[_list.indexOf(map)][0];
-                        controller.isCompleted
-                            ? controller.reverse()
-                            : controller.forward();
-                      },
-                      trailing: Container(
-                        width: 125,
-                        // color: Colors.green,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            SizedBox(
-                              width: 25,
-                              child: IconButton(
-                                onPressed: () => _onUp(map, true),
-                                icon: Icon(Icons.keyboard_arrow_up, size: 15, color: Colors.blue),
-                                padding: EdgeInsets.all(0),
-                                splashRadius: 12,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 25,
-                              child: IconButton(
-                                onPressed: () => _onDown(map, true),
-                                icon: Icon(Icons.keyboard_arrow_down, size: 15, color: Colors.red),
-                                padding: EdgeInsets.all(0),
-                                splashRadius: 12,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 25,
-                              child: IconButton(
-                                onPressed: () => _onAdd(_list.indexOf(map), {"type": "dict", "content": widget.getDummyEntry()}, true),
-                                icon: Icon(Icons.widgets_outlined, size: 15, color: Colors.blue),
-                                padding: EdgeInsets.all(0),
-                                splashRadius: 12,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 25,
-                              child: IconButton(
-                                onPressed: () => _onRm(map, true),
-                                icon: Icon(Icons.delete, size: 15, color: Colors.red),
-                                padding: EdgeInsets.all(0),
-                                splashRadius: 12,
-                              ),
-                            ),
-                            AnimatedBuilder(
-                              animation: _animationList[_list.indexOf(map)][0],
-                              builder: (context, child) => Transform.rotate(
-                                angle: _animationList[_list.indexOf(map)][1].value,
-                                child: Icon(
-                                  Icons.expand_more,
-                                  size: 22.0,
-                                  color: globals.isDark ? Colors.white : Colors.black,
-                                ),
-                              ),
-                            ),
-                          ],
+          // Expanded(
+          //   child: ListView(
+          //     children: _list.map((Map<String, dynamic> map) => Padding(
+          //       padding: EdgeInsets.only(bottom: 5),
+          //       child: ClipRRect(
+          //         borderRadius: BorderRadius.circular(15),
+          //         child: Material(
+          //           color: globals.isDark ? Color(0xff434547) : Color(0xffededed),
+          //           child: ExpansionTile(
+          //             title: Text(_getEntrieHeader(map), style: TextStyle(color: _getColorBasedOnEnabled(map), fontSize: 12)),
+          //             children: _buildWidgetsNoTree(map),
+          //             onExpansionChanged: (value) {
+          //               final controller = _animationList[_list.indexOf(map)][0];
+          //               controller.isCompleted
+          //                   ? controller.reverse()
+          //                   : controller.forward();
+          //             },
+          //             trailing: Container(
+          //               width: 125,
+          //               // color: Colors.green,
+          //               child: Row(
+          //                 mainAxisAlignment: MainAxisAlignment.end,
+          //                 children: [
+          //                   SizedBox(
+          //                     width: 25,
+          //                     child: IconButton(
+          //                       onPressed: () => _onUp(map, true),
+          //                       icon: Icon(Icons.keyboard_arrow_up, size: 15, color: Colors.blue),
+          //                       padding: EdgeInsets.all(0),
+          //                       splashRadius: 12,
+          //                     ),
+          //                   ),
+          //                   SizedBox(
+          //                     width: 25,
+          //                     child: IconButton(
+          //                       onPressed: () => _onDown(map, true),
+          //                       icon: Icon(Icons.keyboard_arrow_down, size: 15, color: Colors.red),
+          //                       padding: EdgeInsets.all(0),
+          //                       splashRadius: 12,
+          //                     ),
+          //                   ),
+          //                   SizedBox(
+          //                     width: 25,
+          //                     child: IconButton(
+          //                       onPressed: () => _onAdd(_list.indexOf(map), {"type": "dict", "content": widget.getDummyEntry()}, true),
+          //                       icon: Icon(Icons.widgets_outlined, size: 15, color: Colors.blue),
+          //                       padding: EdgeInsets.all(0),
+          //                       splashRadius: 12,
+          //                     ),
+          //                   ),
+          //                   SizedBox(
+          //                     width: 25,
+          //                     child: IconButton(
+          //                       onPressed: () => _onRm(map, true),
+          //                       icon: Icon(Icons.delete, size: 15, color: Colors.red),
+          //                       padding: EdgeInsets.all(0),
+          //                       splashRadius: 12,
+          //                     ),
+          //                   ),
+          //                   AnimatedBuilder(
+          //                     animation: _animationList[_list.indexOf(map)][0],
+          //                     builder: (context, child) => Transform.rotate(
+          //                       angle: _animationList[_list.indexOf(map)][1].value,
+          //                       child: Icon(
+          //                         Icons.expand_more,
+          //                         size: 22.0,
+          //                         color: globals.isDark ? Colors.white : Colors.black,
+          //                       ),
+          //                     ),
+          //                   ),
+          //                 ],
+          //               ),
+          //             ),
+          //           ),
+          //         ),
+          //       ),
+          //     )).toList(),
+          //   ),
+          // ),
+          ..._list.map((Map<String, dynamic> map) => Padding(
+            padding: EdgeInsets.only(bottom: 5),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(15),
+              child: Material(
+                color: globals.isDark ? Color(0xff434547) : Color(0xffededed),
+                child: ExpansionTile(
+                  title: Text(_getEntrieHeader(map), style: TextStyle(color: _getColorBasedOnEnabled(map), fontSize: 12)),
+                  children: _buildWidgetsNoTree(map),
+                  onExpansionChanged: (value) {
+                    final controller = _animationList[_list.indexOf(map)][0];
+                    controller.isCompleted
+                        ? controller.reverse()
+                        : controller.forward();
+                  },
+                  trailing: Container(
+                    width: 125,
+                    // color: Colors.green,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        SizedBox(
+                          width: 25,
+                          child: IconButton(
+                            onPressed: () => _onUp(map, true),
+                            icon: Icon(Icons.keyboard_arrow_up, size: 15, color: Colors.blue),
+                            padding: EdgeInsets.all(0),
+                            splashRadius: 12,
+                          ),
                         ),
-                      ),
+                        SizedBox(
+                          width: 25,
+                          child: IconButton(
+                            onPressed: () => _onDown(map, true),
+                            icon: Icon(Icons.keyboard_arrow_down, size: 15, color: Colors.red),
+                            padding: EdgeInsets.all(0),
+                            splashRadius: 12,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 25,
+                          child: IconButton(
+                            onPressed: () => _onAdd(_list.indexOf(map), {"type": "dict", "content": widget.getDummyEntry()}, true),
+                            icon: Icon(Icons.widgets_outlined, size: 15, color: Colors.blue),
+                            padding: EdgeInsets.all(0),
+                            splashRadius: 12,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 25,
+                          child: IconButton(
+                            onPressed: () => _onRm(map, true),
+                            icon: Icon(Icons.delete, size: 15, color: Colors.red),
+                            padding: EdgeInsets.all(0),
+                            splashRadius: 12,
+                          ),
+                        ),
+                        AnimatedBuilder(
+                          animation: _animationList[_list.indexOf(map)][0],
+                          builder: (context, child) => Transform.rotate(
+                            angle: _animationList[_list.indexOf(map)][1].value,
+                            child: Icon(
+                              Icons.expand_more,
+                              size: 22.0,
+                              color: globals.isDark ? Colors.white : Colors.black,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
-              )).toList(),
+              ),
             ),
-          ),
+          )).toList(),
           ClipRRect(
             borderRadius: BorderRadius.circular(15),
             child: Container(

@@ -72,7 +72,7 @@ class _DataWidgetState extends State<DataWidget> {
                 errorBorder: InputBorder.none,
                 disabledBorder: InputBorder.none,
                 hintText: "hex",
-                contentPadding: EdgeInsets.only(top: 17),
+                contentPadding: EdgeInsets.only(top: 10 , right: 18),
               ),
               style: TextStyle(fontSize: 12),
               textAlignVertical: TextAlignVertical.bottom,
