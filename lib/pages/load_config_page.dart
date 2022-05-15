@@ -100,102 +100,129 @@ class _LoadConfigPageState extends State<LoadConfigPage> {
     );
   }
 
+  final _gradient = LinearGradient(colors: [
+    Color(0xffCD5A75),
+    Color(0xffD169C8),
+    Color(0xffBA6BFE)
+  ]);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: globals.isDark ? Color(0xff1a1a1a) : null,
       body: SizedBox.expand(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(height: 6),
-            Text(
-              "OpenConfigurator",
-              style: TextStyle(
-                fontSize: 21,
-                letterSpacing: -0.5,
+            Container(
+              decoration: BoxDecoration(
+                color: globals.isDark ? Colors.black.withOpacity(0.4) : /*Colors.white.withOpacity(0.7)Color(0xffEEEEEE)*/Colors.black.withOpacity(0.01),
+                borderRadius: BorderRadius.circular(25),
+                border: Border.all(color: globals.isDark ? Colors.white38 : Colors.black54, width: 1),
               ),
-            ),
-            SizedBox(height: 0),
-            SizedBox(
-              height: 30,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+              width: 380,
+              padding: EdgeInsets.fromLTRB(0, 15, 0, 22),
+              child: Column(
                 children: [
-                  Text(
-                    "OC ",
-                    style: TextStyle(
-                      fontSize: 15.0,
-                      letterSpacing: -0.5,
-                      color: Colors.red,
+                  ShaderMask(
+                    blendMode: BlendMode.srcIn,
+                    shaderCallback: (bounds) => _gradient.createShader(
+                      Rect.fromLTWH(0, 0, bounds.width, bounds.height),
+                    ),
+                    child: Text(
+                      "OpenConfigurator",
+                      style: TextStyle(
+                        fontSize: 21,
+                        letterSpacing: -0.5,
+                      ),
                     ),
                   ),
-                  DropdownButtonHideUnderline(
-                    child: DropdownButton(
-                      value: _dropdownValue,
-                      style: TextStyle(
-                        fontSize: 15.0,
-                        letterSpacing: -0.5,
-                        color: Colors.red,
+                  SizedBox(height: 0),
+                  SizedBox(
+                    height: 30,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "OC ",
+                          style: TextStyle(
+                            fontSize: 15.0,
+                            letterSpacing: -0.5,
+                            color: Colors.red,
+                          ),
+                        ),
+                        DropdownButtonHideUnderline(
+                          child: DropdownButton(
+                            value: _dropdownValue,
+                            style: TextStyle(
+                              fontSize: 15.0,
+                              letterSpacing: -0.5,
+                              color: Colors.red,
+                            ),
+                            onChanged: (String newValue) {
+                              setState(() {
+                                _dropdownValue = newValue;
+                              });
+                            },
+                            items: _dropdownOptions.map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Container(
+                      height: 30,
+                      width: 100,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: const [Color(0xff28CBA4), Color(0xff43E37E)],
+                          begin: Alignment.bottomLeft,
+                          end: Alignment.topRight,
+                          stops: [0.1, 1],
+                        ),
                       ),
-                      onChanged: (String newValue) {
-                        setState(() {
-                          _dropdownValue = newValue;
-                        });
-                      },
-                      items: _dropdownOptions.map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
+                      child: Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          onTap: _loadConfig,
+                          child: Center(
+                            child: Text(
+                              Platform.isAndroid || Platform.isIOS ? "Open" : "Paste path",
+                              style: TextStyle(
+                                  color: const Color(0xff000000),
+                                  fontWeight: FontWeight.bold
+                              ),
+                            ),
+                          ),
+                          splashColor: Colors.lightBlue,
+                        ),
+                      ),
                     ),
                   ),
                 ],
               ),
             ),
-            SizedBox(height: 20),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: Container(
-                height: 30,
-                width: 100,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: const [Color(0xff28CBA4), Color(0xff43E37E)],
-                    begin: Alignment.bottomLeft,
-                    end: Alignment.topRight,
-                    stops: [0.1, 1],
-                  ),
-                ),
-                child: Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    onTap: _loadConfig,
-                    child: Center(
-                      child: Text(
-                        Platform.isAndroid || Platform.isIOS ? "Open" : "Paste path",
-                        style: TextStyle(
-                          color: const Color(0xff000000),
-                          fontWeight: FontWeight.bold
-                        ),
-                      ),
-                    ),
-                    splashColor: Colors.lightBlue,
-                  ),
-                ),
-              ),
-            ),
-          ...(globals.isMobile
+            ...(globals.isMobile
                 ? []
                 : [
-                    SizedBox(height: 60),
+                    SizedBox(height: 20),
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+                      padding: EdgeInsets.symmetric(vertical: 10),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: Colors.black.withOpacity(0.4),
+                        // border: Border.all(color: Colors.white38, width: 1),
                       ),
+                      width: 380,
                       child: Column(
                         children: [
                           Text(
@@ -219,9 +246,9 @@ class _LoadConfigPageState extends State<LoadConfigPage> {
                       ),
                     ),
                   ]),
-            SizedBox(height: 10),
-            _getErrorWidget(),
-          ],
+                  SizedBox(height: 10),
+                  _getErrorWidget(),
+                ],
         ),
       ),
     );

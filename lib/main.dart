@@ -57,8 +57,8 @@ class _MainState extends State<Main> {
           children: [
             Text('Selected unimplemented version'),
             TextButton(
-                onPressed: _reset,
-                child: Text('Ok')
+              onPressed: _reset,
+              child: Text('Ok')
             ),
           ],
         ),
@@ -82,7 +82,9 @@ class _MainState extends State<Main> {
     };
 
     return MaterialApp(
-      theme: globals.isDark ? ThemeData.dark() : null,
+      theme: globals.isDark ? ThemeData.dark().copyWith(
+        // scaffoldBackgroundColor: Color(0xff1a1a1a)
+      ) : null,
       home: globals.pConfig == null
           ? LoadConfigPage(
               onConfigLoaded: _onConfigLoaded,

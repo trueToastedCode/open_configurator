@@ -10,7 +10,6 @@ import 'package:open_configurator/pages/0.8.0/nvram/nvram_page.dart';
 import 'package:open_configurator/pages/0.8.0/platform_info/platform_info_page.dart';
 import 'package:open_configurator/pages/0.8.0/uefi/uefi_page.dart';
 import 'package:open_configurator/globals.dart' as globals;
-import 'package:url_launcher/url_launcher.dart';
 
 
 class SideBar extends StatefulWidget {
@@ -69,6 +68,7 @@ class _SideBarState extends State<SideBar> {
       width: globals.isMobile ? 175 : 170,
       height: double.infinity,
       color: globals.isDark ? Color(0xff0C0C0D) : null,
+      padding: EdgeInsets.only(left: 0, right: 0),
       child: Column(
         children: [
           SizedBox(height: 0),
@@ -83,7 +83,7 @@ class _SideBarState extends State<SideBar> {
                 child: Container(
                   color: globals.isDark
                       ? Colors.white.withOpacity(0.07)
-                      : Colors.white.withOpacity(0.01),
+                      : null,
                   child: ListView(
                     children: [
                       SizedBox(height: 30),

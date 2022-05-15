@@ -17,7 +17,7 @@ import 'templates/checkbox_widget.dart';
 import 'templates/data_widget.dart';
 import 'templates/string_widget.dart';
 
-const DISPLAY_VERSION = '0.0.1-9';
+const DISPLAY_VERSION = '0.0.1-10';
 
 String selectedOCVersion;
 
@@ -245,4 +245,9 @@ gatheringFilesPage() async {
         fontSize: 16.0
     );
   }
+}
+
+String getDeviceType() {
+  final data = MediaQueryData.fromWindow(WidgetsBinding.instance.window);
+  return data.size.shortestSide < 600 ? 'phone' :'tablet';
 }
